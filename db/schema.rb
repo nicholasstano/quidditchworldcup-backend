@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_17_140813) do
+ActiveRecord::Schema.define(version: 2019_09_17_182841) do
 
   create_table "games", force: :cascade do |t|
     t.integer "week_id"
@@ -18,8 +18,6 @@ ActiveRecord::Schema.define(version: 2019_09_17_140813) do
     t.integer "away_id"
     t.integer "home_score"
     t.integer "away_score"
-    t.string "date"
-    t.boolean "snitch"
     t.boolean "completed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -38,10 +36,6 @@ ActiveRecord::Schema.define(version: 2019_09_17_140813) do
 
   create_table "players", force: :cascade do |t|
     t.integer "team_id"
-    t.integer "quaffle_scored"
-    t.integer "quaffle_saved"
-    t.integer "bludger_smashed"
-    t.integer "snitch_caught"
     t.string "name"
     t.string "position"
     t.datetime "created_at", null: false
@@ -65,6 +59,7 @@ ActiveRecord::Schema.define(version: 2019_09_17_140813) do
     t.boolean "games_completed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "date"
   end
 
 end
