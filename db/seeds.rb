@@ -42,15 +42,15 @@
 # southafrica = Team.create(name: "Republic of South Africa", flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Flag_of_South_Africa.svg/250px-Flag_of_South_Africa.svg.png", division: "Africa and Western Asia", wins: 0, losses: 0, points_for: 0, points_against: 0)
 # tanzania = Team.create(name: "United Republic of Tanzania", flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Flag_of_Tanzania.svg/250px-Flag_of_Tanzania.svg.png", division: "Africa and Western Asia", wins: 0, losses: 0, points_for: 0, points_against: 0)
 
-Team.all.each do |team| 
-    Player.create(name: Faker::Name.unique.name, position: "Chaser", team: team)
-    Player.create(name: Faker::Name.unique.name, position: "Chaser", team: team)
-    Player.create(name: Faker::Name.unique.name, position: "Chaser", team: team)
-    Player.create(name: Faker::Name.unique.name, position: "Beater", team: team)
-    Player.create(name: Faker::Name.unique.name, position: "Beater", team: team)
-    Player.create(name: Faker::Name.unique.name, position: "Seeker", team: team)
-    Player.create(name: Faker::Name.unique.name, position: "Keeper", team: team)
-end
+# Team.all.each do |team| 
+#     Player.create(name: Faker::Name.unique.name, position: "Chaser", team: team)
+#     Player.create(name: Faker::Name.unique.name, position: "Chaser", team: team)
+#     Player.create(name: Faker::Name.unique.name, position: "Chaser", team: team)
+#     Player.create(name: Faker::Name.unique.name, position: "Beater", team: team)
+#     Player.create(name: Faker::Name.unique.name, position: "Beater", team: team)
+#     Player.create(name: Faker::Name.unique.name, position: "Seeker", team: team)
+#     Player.create(name: Faker::Name.unique.name, position: "Keeper", team: team)
+# end
 
 # Week.create(name: "Week 1", games_completed: false, date: "03 30 2030")
 # Week.create(name: "Week 2", games_completed: false, date: "04 06 2030")
