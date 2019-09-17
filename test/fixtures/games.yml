@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  week_id: 1
+  home_id: 1
+  away_id: 1
+  home_score: 1
+  away_score: 1
+  date: MyString
+  snitch: false
+  completed: false
+
+two:
+  week_id: 1
+  home_id: 1
+  away_id: 1
+  home_score: 1
+  away_score: 1
+  date: MyString
+  snitch: false
+  completed: false
