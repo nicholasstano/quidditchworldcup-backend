@@ -10,4 +10,7 @@ class Team < ApplicationRecord
             position: player.position
         }}
     end
+    def games_played
+        self.wins + self.losses
+    end
 end
