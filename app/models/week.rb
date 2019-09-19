@@ -17,4 +17,5 @@ class Week < ApplicationRecord
             }
         end
     end
+
 end
