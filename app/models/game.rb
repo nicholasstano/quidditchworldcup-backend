@@ -5,15 +5,17 @@ class Game < ApplicationRecord
     has_many :player_games
     has_many :players, through: :player_games
 
-    def teams_info 
+    def teamInfo
         {
+            game_id: self.id,
             week_id: week.id,
-            home_id: home.id,
+            completed: self.completed,
             home_name: home.name,
-            home_score: home.points_for,
-            away_id: away.id,
+            home_score: home_score,
+            home_id: home.id,
             away_name: away.name,
-            away_score: away.points_for
+            away_score: away_score,
+            away_id: away.id,
         }
     end
 end
