@@ -7,6 +7,7 @@ class Game < ApplicationRecord
 
     def teams_info 
         {
+            week_id: week.id,
             home_id: home.id,
             home_name: home.name,
             home_score: home.points_for,

@@ -10,7 +10,16 @@ class Team < ApplicationRecord
             position: player.position
         }}
     end
+
     def games_played
         self.wins + self.losses
     end
+    
+    def schedule 
+        sched_games = Game.all.select do |game| 
+            self.id == game.home_id || self.id == game.away.id
+        end
+        sched_games.map { |g| g.teams_info } 
+    end
 end
+
