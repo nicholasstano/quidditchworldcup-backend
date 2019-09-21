@@ -19,7 +19,7 @@ class Team < ApplicationRecord
         sched_games = Game.all.select do |game| 
             self.id == game.home_id || self.id == game.away.id
         end
-        sched_games.map { |g| g.teams_info } 
+        sched_games.map { |g| g.teamInfo } 
     end
 end
 
