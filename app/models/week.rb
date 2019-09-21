@@ -13,7 +13,9 @@ class Week < ApplicationRecord
                 away_id: game.away.id,
                 away_name: game.away.name,
                 away_score: game.away_score,
-                away_flag: game.away.flag
+                away_flag: game.away.flag,   
+                snitch_caught_by: game.teamInfo[:snitch_caught_by],
+                team_captured_snitch: game.teamInfo[:team_captured_snitch]
             }
         end
     end
