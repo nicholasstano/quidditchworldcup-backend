@@ -7,7 +7,12 @@ class Team < ApplicationRecord
         self.players.map {|player| {
             id: player.id, 
             name: player.name,
-            position: player.position
+            position: player.position, 
+            quaffle_scored: player.quaffle_scored,
+            quaffle_saved: player.quaffle_saved,
+            snitch_captured: player.snitch_captured,
+            bludgers_smashed: player.bludgers_smashed
+
         }}
     end
 
