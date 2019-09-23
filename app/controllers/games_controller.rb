@@ -88,6 +88,7 @@ class GamesController < ApplicationController
             updatedHomeTeamLosses = [homeTeamLosses, 1].reduce(:+)
             game.home.update(losses: updatedHomeTeamLosses)
         end
+        render json: game
     end
 
     private 

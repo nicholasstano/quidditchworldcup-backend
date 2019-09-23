@@ -26,5 +26,9 @@ class Team < ApplicationRecord
         end
         sched_games.map { |g| g.teamInfo } 
     end
+
+    def top_sixteen 
+        Team.all.sort {|teamOne, teamTwo| teamTwo.wins <=> teamOne.wins}
+    end
 end
 

@@ -13,17 +13,20 @@ class Game < ApplicationRecord
         team = player_game.map {|player| player.player.team.name}
         team_captured_snitch = team[0]
         {
+            game_id: self.id,
             snitch_caught_by: snitch_caught_by,
             team_captured_snitch: team_captured_snitch,
-            game_id: self.id,
             week_id: week.id,
-            completed: self.completed,
+            game_completed: self.completed,
             home_name: home.name,
+            home_flag: home.flag,
             home_score: home_score,
             home_id: home.id,
             away_name: away.name,
+            away_flag: away.flag,   
             away_score: away_score,
             away_id: away.id,
         }
     end
+
 end
