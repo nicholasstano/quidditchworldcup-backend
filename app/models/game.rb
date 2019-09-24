@@ -28,5 +28,4 @@ class Game < ApplicationRecord
             away_id: away.id,
         }
     end
-
 end
