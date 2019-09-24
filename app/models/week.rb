@@ -1,5 +1,6 @@
 class Week < ApplicationRecord
     has_many :games
+    has_many :playoff_games
 
     def week_games 
         self.games.map do |game|
