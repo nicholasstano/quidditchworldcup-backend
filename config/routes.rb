@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   
   get '/player_games/home_players', to: 'player_games#home_players'
   get '/playoff_games/sixteen', to: 'playoff_games#sixteen'
-  
+  get '/playoff_games/roundOneGames', to: 'playoff_games#roundOneGames'
   resources :players
   resources :games
   resources :weeks 

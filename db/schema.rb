@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_24_141716) do
+ActiveRecord::Schema.define(version: 2019_09_24_170712) do
 
   create_table "games", force: :cascade do |t|
     t.integer "week_id"
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 2019_09_24_141716) do
     t.integer "away_id"
     t.integer "home_score"
     t.integer "away_score"
-    t.boolean "compeleted"
+    t.boolean "completed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -16,5 +16,4 @@ class WeeksController < ApplicationController
             week.update(games_completed: true)
         end
     end
-
 end

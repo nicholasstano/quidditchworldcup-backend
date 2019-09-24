@@ -72,8 +72,23 @@ class GamesController < ApplicationController
         awayPointsAgainst = game.away.points_against
         updatedAwayPointsAgainst = [game.home_score, awayPointsAgainst].reduce(:+)
         game.away.update(points_against: updatedAwayPointsAgainst)
-
-        if (game.home_score > game.away_score)
+        if (game.home_score == game.away_score)
+            if snitch == "home" 
+                homeTeamWins = game.home.wins
+                updatedHomeTeamWins = [homeTeamWins, 1].reduce(:+)
+                game.home.update(wins: updatedHomeTeamWins)
+                awayTeamLosses = game.away.losses
+                updatedAwayTeamLosses = [awayTeamLosses, 1].reduce(:+)
+                game.away.update(losses: updatedAwayTeamLosses)
+            elsif snitch == "away"
+                awayTeamWins = game.away.wins 
+                updatedAwayTeamWins = [awayTeamWins, 1].reduce(:+)
+                game.away.update(wins: updatedAwayTeamWins)
+                homeTeamLosses = game.home.losses
+                updatedHomeTeamLosses = [homeTeamLosses, 1].reduce(:+)
+                game.home.update(losses: updatedHomeTeamLosses)
+            end
+        elsif (game.home_score > game.away_score)
             homeTeamWins = game.home.wins
             updatedHomeTeamWins = [homeTeamWins, 1].reduce(:+)
             game.home.update(wins: updatedHomeTeamWins)

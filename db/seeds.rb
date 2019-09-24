@@ -66,10 +66,6 @@
 # Week.create(name: "Week 12", games_completed: false, date: "06 15 2030")
 # Week.create(name: "Week 13", games_completed: false, date: "06 22 2030")
 # Week.create(name: "Week 14", games_completed: false, date: "06 29 2030")
-# Week.create(name: "Week 15: First Round", games_completed: false, date: "07 06 2030")
-# Week.create(name: "Week 16: Second Round", games_completed: false, date: "07 13 2030")
-# Week.create(name: "Week 17: Semifinals", games_completed: false, date: "07 20 2030")
-# Week.create(name: "Week 18: Finals", games_completed: false, date: "08 03 2030")
 
 # Division: Europe Games
 # Game.create(week_id: Week.all[0].id, home_id: 9, away_id: 10, home_score: 0, away_score: 0, completed: false)
@@ -330,3 +326,7 @@
 # Game.create(week_id: Week.all[9].id, home_id: 24, away_id: 21, home_score: 0, away_score: 0, completed: false)
 # Game.create(week_id: Week.all[11].id, home_id: 24, away_id: 22, home_score: 0, away_score: 0, completed: false)
 # Game.create(week_id: Week.all[13].id, home_id: 24, away_id: 23, home_score: 0, away_score: 0, completed: false)
+
+# All Player Games
+# Game.all.each {|game| game.home.players.each {|player| PlayerGame.create(player_id: player.id, game_id: game.id, quaffle_scored: 0, quaffle_saved: 0, bludger_smashed: 0, snitch_caught: 0) } }
+# Game.all.each {|game| game.away.players.each {|player| PlayerGame.create(player_id: player.id, game_id: game.id, quaffle_scored: 0, quaffle_saved: 0, bludger_smashed: 0, snitch_caught: 0) } }
