@@ -9,7 +9,6 @@ class Game < ApplicationRecord
         player_game = self.player_games.select {|player| player.snitch_caught == 150}
         player = player_game.map {|player| player.player.name}
         snitch_caught_by = player[0]
-        player_game = self.player_games.select {|player| player.snitch_caught == 150}
         team = player_game.map {|player| player.player.team.name}
         team_captured_snitch = team[0]
         {
@@ -28,4 +27,5 @@ class Game < ApplicationRecord
             away_id: away.id,
         }
     end
+
 end
