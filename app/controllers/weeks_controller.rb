@@ -15,5 +15,6 @@ class WeeksController < ApplicationController
         if (completedWeek.length == 0)
             week.update(games_completed: true)
         end
+        render json: week
     end
 end
