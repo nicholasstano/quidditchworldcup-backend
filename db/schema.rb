@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_26_130721) do
+ActiveRecord::Schema.define(version: 2019_09_26_151508) do
 
   create_table "games", force: :cascade do |t|
     t.integer "week_id"
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 2019_09_26_130721) do
 
   create_table "player_playoff_games", force: :cascade do |t|
     t.integer "player_id"
-    t.integer "game_id"
+    t.integer "playoff_game_id"
     t.integer "quaffle_scored"
     t.integer "quaffle_saved"
     t.integer "bludger_smashed"
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 2019_09_26_130721) do
   end
 
   create_table "playoff_games", force: :cascade do |t|
-    t.integer "week_id"
+    t.integer "playoff_week_id"
     t.integer "home_id"
     t.integer "away_id"
     t.integer "home_score"

@@ -3,7 +3,7 @@ class Team < ApplicationRecord
     has_many :players
     has_many :playoff_games
     has_many :weeks, through: :games
-    has_many :weeks, through: :playoff_games
+    has_many :playoff_weeks, through: :playoff_games
 
     def player_roster 
         self.players.map {|player| {
