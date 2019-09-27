@@ -3,7 +3,15 @@ Rails.application.routes.draw do
   get '/player_games/home_players', to: 'player_games#home_players'
   get '/playoff_games/roundOneGames', to: 'playoff_games#roundOneGames'
   post '/playoff_games/roundOneGames', to: 'playoff_games#roundOneGames'
-  
+  get '/playoff_games/roundTwoGames', to: 'playoff_games#roundTwoGames'
+  post '/playoff_games/roundTwoGames', to: 'playoff_games#roundTwoGames'
+  get '/playoff_games/roundThreeGames', to: 'playoff_games#roundThreeGames'
+  post '/playoff_games/roundThreeGames', to: 'playoff_games#roundThreeGames'
+  get '/playoff_games/roundFourGames', to: 'playoff_games#roundFourGames'
+  post '/playoff_games/roundFourGames', to: 'playoff_games#roundFourGames'
+  get '/playoff_games/winner', to: 'playoff_games#winner'
+  post '/playoff_games/winner', to: 'playoff_games#winner'
+
   resources :players
   resources :games
   resources :playoff_games

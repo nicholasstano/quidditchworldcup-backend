@@ -9,6 +9,177 @@ class PlayoffGamesController < ApplicationController
         render json: playoff_game   
     end
 
+    def winner 
+        if PlayoffWeek.all[3].playoff_games.select {|game| game.completed == false}.length == 0
+        winner = []
+            PlayoffWeek.all[3].playoff_games.each do |game|
+                if (game.away_score > game.home_score)
+                    winner.push(game.away)
+                elsif (game.home_score > game.away_score)
+                    winner.push(game.home)
+                elsif (game.home_score == game.away_score)
+                    penalty = ["home", "away"]
+                    if penalty.sample == "home"
+                        new_score = game.home_score + 10
+                        game.update(home_score: new_score)
+                        winner.push(game.home)
+                    elsif penalty.sample == "away"
+                        new_score = game.away_score + 10
+                        game.update(away_score: new_score)
+                        winner.push(game.away)
+                    end
+                end
+            end
+        end
+        render json: winner
+    end
+
+    def roundFourGames
+        if PlayoffWeek.all[2].playoff_games.select {|game| game.completed == false}.length == 0 && PlayoffWeek.all[3].playoff_games.length == 0
+        roundFourGamesArray = []
+        winnersFromRoundThree = []
+            PlayoffWeek.all[2].playoff_games.each do |game|
+                if (game.away_score > game.home_score)
+                    winnersFromRoundThree.push(game.away)
+                elsif (game.home_score > game.away_score)
+                    winnersFromRoundThree.push(game.home)
+                elsif (game.home_score == game.away_score)
+                    penalty = ["home", "away"]
+                    if penalty.sample == "home"
+                        new_score = game.home_score + 10
+                        game.update(home_score: new_score)
+                        winnersFromRoundThree.push(game.home)
+                    elsif penalty.sample == "away"
+                        new_score = game.away_score + 10
+                        game.update(away_score: new_score)
+                        winnersFromRoundThree.push(game.away)
+                    end
+                end
+            end
+            topTwo = winnersFromRoundThree.sort_by {|team| [team.wins, team.points_for]}.reverse[0, 2]
+            gameOne = PlayoffGame.create(playoff_week_id: PlayoffWeek.all[3].id, home_id: topTwo[0].id, away_id: topTwo[1].id, home_score: 0, away_score: 0, completed: false)
+            gameOne.home.players.each do |player|
+                PlayerPlayoffGame.create(player_id: player.id, playoff_game_id: gameOne.id, quaffle_scored: 0, quaffle_saved: 0, bludger_smashed: 0, snitch_caught: 0)
+            end
+            gameOne.away.players.each do |player|
+                PlayerPlayoffGame.create(player_id: player.id, playoff_game_id: gameOne.id, quaffle_scored: 0, quaffle_saved: 0, bludger_smashed: 0, snitch_caught: 0)
+            end
+            roundFourGamesArray.push(gameOne)
+            render json: roundFourGamesArray
+        else  
+            roundFourGamesArray = PlayoffGame.all.select {|game| game.playoff_week_id == PlayoffWeek.all[3].id}
+            render json: roundFourGamesArray
+        end
+    end
+
+    def roundThreeGames
+        if PlayoffWeek.all[1].playoff_games.select {|game| game.completed == false}.length == 0 && PlayoffWeek.all[2].playoff_games.length == 0
+            roundThreeGamesArray = []
+            winnersFromRoundTwo = []
+            PlayoffWeek.all[1].playoff_games.each do |game|
+                if (game.away_score > game.home_score)
+                    winnersFromRoundTwo.push(game.away)
+                elsif (game.home_score > game.away_score)
+                    winnersFromRoundTwo.push(game.home)
+                elsif (game.home_score == game.away_score)
+                    penalty = ["home", "away"]
+                    if penalty.sample == "home"
+                        new_score = game.home_score + 10
+                        game.update(home_score: new_score)
+                        winnersFromRoundTwo.push(game.home)
+                    elsif penalty.sample == "away"
+                        new_score = game.away_score + 10
+                        game.update(away_score: new_score)
+                        winnersFromRoundTwo.push(game.away)
+                    end
+                end
+            end
+            topFour = winnersFromRoundTwo.sort_by {|team| [team.wins, team.points_for]}.reverse[0, 4]
+            gameOne = PlayoffGame.create(playoff_week_id: PlayoffWeek.all[2].id, home_id: topFour[0].id, away_id: topFour[3].id, home_score: 0, away_score: 0, completed: false)
+                gameOne.home.players.each do |player|
+                    PlayerPlayoffGame.create(player_id: player.id, playoff_game_id: gameOne.id, quaffle_scored: 0, quaffle_saved: 0, bludger_smashed: 0, snitch_caught: 0)
+                end
+                gameOne.away.players.each do |player|
+                    PlayerPlayoffGame.create(player_id: player.id, playoff_game_id: gameOne.id, quaffle_scored: 0, quaffle_saved: 0, bludger_smashed: 0, snitch_caught: 0)
+                end
+            roundThreeGamesArray.push(gameOne)
+            gameTwo = PlayoffGame.create(playoff_week_id: PlayoffWeek.all[2].id, home_id: topFour[1].id, away_id: topFour[2].id, home_score: 0, away_score: 0, completed: false)
+            gameTwo.home.players.each do |player|
+                PlayerPlayoffGame.create(player_id: player.id, playoff_game_id: gameTwo.id, quaffle_scored: 0, quaffle_saved: 0, bludger_smashed: 0, snitch_caught: 0)
+            end
+            gameTwo.away.players.each do |player|
+                PlayerPlayoffGame.create(player_id: player.id, playoff_game_id: gameTwo.id, quaffle_scored: 0, quaffle_saved: 0, bludger_smashed: 0, snitch_caught: 0)
+            end
+            roundThreeGamesArray.push(gameTwo)
+            render json: roundThreeGamesArray
+        else  
+        roundThreeGamesArray = PlayoffGame.all.select {|game| game.playoff_week_id == PlayoffWeek.all[2].id}
+            render json: roundThreeGamesArray
+        end
+    end
+
+    def roundTwoGames
+        if PlayoffWeek.all[0].playoff_games.select {|game| game.completed == false}.length == 0 && PlayoffWeek.all[1].playoff_games.length == 0
+            roundTwoGamesArray = []
+            winnersFromRoundOne = []
+            PlayoffWeek.all[0].playoff_games.each do |game|
+                if (game.away_score > game.home_score)
+                    winnersFromRoundOne.push(game.away)
+                elsif (game.home_score > game.away_score)
+                    winnersFromRoundOne.push(game.home)
+                elsif (game.home_score == game.away_score)
+                    penalty = ["home", "away"]
+                    if penalty.sample == "home"
+                        new_score = game.home_score + 10
+                        game.update(home_score: new_score)
+                        winnersFromRoundOne.push(game.home)
+                    elsif penalty.sample == "away"
+                        new_score = game.away_score + 10
+                        game.update(away_score: new_score)
+                        winnersFromRoundOne.push(game.away)
+                    end
+                end
+            end
+            topEight = winnersFromRoundOne.sort_by {|team| [team.wins, team.points_for]}.reverse[0, 8]
+            gameOne = PlayoffGame.create(playoff_week_id: PlayoffWeek.all[1].id, home_id: topEight[0].id, away_id: topEight[7].id, home_score: 0, away_score: 0, completed: false)
+                gameOne.home.players.each do |player|
+                    PlayerPlayoffGame.create(player_id: player.id, playoff_game_id: gameOne.id, quaffle_scored: 0, quaffle_saved: 0, bludger_smashed: 0, snitch_caught: 0)
+                end
+                gameOne.away.players.each do |player|
+                    PlayerPlayoffGame.create(player_id: player.id, playoff_game_id: gameOne.id, quaffle_scored: 0, quaffle_saved: 0, bludger_smashed: 0, snitch_caught: 0)
+                end
+            roundTwoGamesArray.push(gameOne)
+            gameTwo = PlayoffGame.create(playoff_week_id: PlayoffWeek.all[1].id, home_id: topEight[1].id, away_id: topEight[6].id, home_score: 0, away_score: 0, completed: false)
+            gameTwo.home.players.each do |player|
+                PlayerPlayoffGame.create(player_id: player.id, playoff_game_id: gameTwo.id, quaffle_scored: 0, quaffle_saved: 0, bludger_smashed: 0, snitch_caught: 0)
+            end
+            gameTwo.away.players.each do |player|
+                PlayerPlayoffGame.create(player_id: player.id, playoff_game_id: gameTwo.id, quaffle_scored: 0, quaffle_saved: 0, bludger_smashed: 0, snitch_caught: 0)
+            end
+            roundTwoGamesArray.push(gameTwo)
+            gameThree = PlayoffGame.create(playoff_week_id: PlayoffWeek.all[1].id, home_id: topEight[2].id, away_id: topEight[5].id, home_score: 0, away_score: 0, completed: false)
+            gameThree.home.players.each do |player|
+                PlayerPlayoffGame.create(player_id: player.id, playoff_game_id: gameThree.id, quaffle_scored: 0, quaffle_saved: 0, bludger_smashed: 0, snitch_caught: 0)
+            end
+            gameThree.away.players.each do |player|
+                PlayerPlayoffGame.create(player_id: player.id, playoff_game_id: gameThree.id, quaffle_scored: 0, quaffle_saved: 0, bludger_smashed: 0, snitch_caught: 0)
+            end
+            roundTwoGamesArray.push(gameThree)
+            gameFour = PlayoffGame.create(playoff_week_id: PlayoffWeek.all[1].id, home_id: topEight[3].id, away_id: topEight[4].id, home_score: 0, away_score: 0, completed: false)
+            gameFour.home.players.each do |player|
+                PlayerPlayoffGame.create(player_id: player.id, playoff_game_id: gameFour.id, quaffle_scored: 0, quaffle_saved: 0, bludger_smashed: 0, snitch_caught: 0)
+            end
+            gameFour.away.players.each do |player|
+                PlayerPlayoffGame.create(player_id: player.id, playoff_game_id: gameFour.id, quaffle_scored: 0, quaffle_saved: 0, bludger_smashed: 0, snitch_caught: 0)
+            end
+            roundTwoGamesArray.push(gameFour)
+                render json: roundTwoGamesArray
+        else  
+        roundTwoGamesArray = PlayoffGame.all.select {|game| game.playoff_week_id == PlayoffWeek.all[1].id}
+            render json: roundTwoGamesArray
+        end
+    end
+
     def roundOneGames
         if Week.last.games.select{|game| game.completed == false}.length == 0 && PlayoffWeek.first.playoff_games.length == 0
             roundOneGamesArray = []
