@@ -6,7 +6,7 @@ class Team < ApplicationRecord
     has_many :playoff_weeks, through: :playoff_games
 
     def player_roster 
-        self.players.map {|player| {
+        Player.where("team_id = ?", self.id).map {|player| {
             id: player.id, 
             name: player.name,
             position: player.position, 
@@ -14,7 +14,6 @@ class Team < ApplicationRecord
             quaffle_saved: player.quaffle_saved,
             snitch_captured: player.snitch_captured,
             bludgers_smashed: player.bludgers_smashed
-
         }}
     end
 
@@ -27,8 +26,5 @@ class Team < ApplicationRecord
         sched_games.map { |g| g.teamInfo } 
     end
 
-    def top_sixteen 
-        Team.all.sort {|teamOne, teamTwo| teamTwo.wins <=> teamOne.wins}
-    end
 end
 
