@@ -148,7 +148,7 @@ class PlayoffGamesController < ApplicationController
                     end
                 end
             end
-            topEight = winnersFromRoundOne.sort_by {|team| [team.wins, team.points_for]}.reverse[0, 8]
+            topEight = winnersFromRoundOne.sort {|a, b| [b.wins, b.points_for, a.points_against] <=> [a.wins, a.points_for, b.points_against]}[0, 8]
             gameOne = PlayoffGame.create(playoff_week_id: PlayoffWeek.all[1].id, home_id: topEight[0].id, away_id: topEight[7].id, home_score: 0, away_score: 0, completed: false)
                 gameOne.home.players.each do |player|
                     PlayerPlayoffGame.create(player_id: player.id, playoff_game_id: gameOne.id, quaffle_scored: 0, quaffle_saved: 0, bludger_smashed: 0, snitch_caught: 0)
@@ -195,7 +195,7 @@ class PlayoffGamesController < ApplicationController
     def roundOneGames
         if Week.last.games.select{|game| game.completed == false}.length == 0 && PlayoffWeek.first.playoff_games.length == 0
             roundOneGamesArray = []
-            topSixteen = Team.all.sort_by {|team| [team.wins, team.points_for]}.reverse[0, 16]
+            topSixteen = Team.all.sort {|a, b| [b.wins, b.points_for, a.points_against] <=> [a.wins, a.points_for, b.points_against]}[0, 16]            
             gameOne = PlayoffGame.create(playoff_week_id: PlayoffWeek.all[0].id, home_id: topSixteen[0].id, away_id: topSixteen[15].id, home_score: 0, away_score: 0, completed: false)
                 gameOne.home.players.each do |player|
                     PlayerPlayoffGame.create(player_id: player.id, playoff_game_id: gameOne.id, quaffle_scored: 0, quaffle_saved: 0, bludger_smashed: 0, snitch_caught: 0)
