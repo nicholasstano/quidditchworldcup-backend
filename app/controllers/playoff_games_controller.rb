@@ -35,7 +35,7 @@ class PlayoffGamesController < ApplicationController
     end
 
     def roundFourGames
-        if PlayoffWeek.all[2].playoff_games.select {|game| game.completed == false}.length == 0 && PlayoffWeek.all[3].playoff_games.length == 0
+        if PlayoffWeek.all[2].playoff_games.select {|game| game.completed == true}.length == 2 && PlayoffWeek.all[3].playoff_games.length == 0
         roundFourGamesArray = []
         winnersFromRoundThree = []
             PlayoffWeek.all[2].playoff_games.each do |game|
@@ -66,14 +66,18 @@ class PlayoffGamesController < ApplicationController
             end
             roundFourGamesArray.push(gameOne)
             render json: roundFourGamesArray
-        else  
-            roundFourGamesArray = PlayoffGame.all.select {|game| game.playoff_week_id == PlayoffWeek.all[3].id}
-            render json: roundFourGamesArray
+        else 
+            if PlayoffWeek.all[2].playoff_games.select {|game| game.completed == false}.length == 0
+                roundFourGamesArray = PlayoffGame.all.select {|game| game.playoff_week_id == PlayoffWeek.all[3].id}
+                render json: roundFourGamesArray
+            else
+                render json: []
+            end
         end
     end
 
     def roundThreeGames
-        if PlayoffWeek.all[1].playoff_games.select {|game| game.completed == false}.length == 0 && PlayoffWeek.all[2].playoff_games.length == 0
+        if PlayoffWeek.all[1].playoff_games.select {|game| game.completed == true}.length == 4 && PlayoffWeek.all[2].playoff_games.length == 0
             roundThreeGamesArray = []
             winnersFromRoundTwo = []
             PlayoffWeek.all[1].playoff_games.each do |game|
@@ -112,14 +116,18 @@ class PlayoffGamesController < ApplicationController
             end
             roundThreeGamesArray.push(gameTwo)
             render json: roundThreeGamesArray
-        else  
-        roundThreeGamesArray = PlayoffGame.all.select {|game| game.playoff_week_id == PlayoffWeek.all[2].id}
-            render json: roundThreeGamesArray
+        else
+            if PlayoffWeek.all[1].playoff_games.select {|game| game.completed == false}.length == 0
+                roundThreeGamesArray = PlayoffGame.all.select {|game| game.playoff_week_id == PlayoffWeek.all[2].id}
+                render json: roundThreeGamesArray
+            else
+                render json: []
+            end   
         end
     end
 
     def roundTwoGames
-        if PlayoffWeek.all[0].playoff_games.select {|game| game.completed == false}.length == 0 && PlayoffWeek.all[1].playoff_games.length == 0
+        if PlayoffWeek.all[0].playoff_games.select {|game| game.completed == true}.length == 8 && PlayoffWeek.all[1].playoff_games.length == 0
             roundTwoGamesArray = []
             winnersFromRoundOne = []
             PlayoffWeek.all[0].playoff_games.each do |game|
@@ -172,11 +180,15 @@ class PlayoffGamesController < ApplicationController
             gameFour.away.players.each do |player|
                 PlayerPlayoffGame.create(player_id: player.id, playoff_game_id: gameFour.id, quaffle_scored: 0, quaffle_saved: 0, bludger_smashed: 0, snitch_caught: 0)
             end
-            roundTwoGamesArray.push(gameFour)
+                roundTwoGamesArray.push(gameFour)
                 render json: roundTwoGamesArray
         else  
-        roundTwoGamesArray = PlayoffGame.all.select {|game| game.playoff_week_id == PlayoffWeek.all[1].id}
-            render json: roundTwoGamesArray
+            if PlayoffWeek.all[0].playoff_games.select {|game| game.completed == false}.length == 0
+                roundTwoGamesArray = PlayoffGame.all.select {|game| game.playoff_week_id == PlayoffWeek.all[1].id}
+                render json: roundTwoGamesArray
+            else
+                render json: []
+            end
         end
     end
 
@@ -247,7 +259,7 @@ class PlayoffGamesController < ApplicationController
                 gameEight.away.players.each do |player|
                     PlayerPlayoffGame.create(player_id: player.id, playoff_game_id: gameEight.id, quaffle_scored: 0, quaffle_saved: 0, bludger_smashed: 0, snitch_caught: 0)
                 end
-                roundOneGamesArray.push(gameEight)
+            roundOneGamesArray.push(gameEight)
             render json: roundOneGamesArray
         else  
             round_one_playoff_games = PlayoffGame.all.select {|game| game.playoff_week_id == PlayoffWeek.first.id}
