@@ -193,7 +193,7 @@ class PlayoffGamesController < ApplicationController
     end
 
     def roundOneGames
-        if Week.last.games.select{|game| game.completed == false}.length == 0 && PlayoffWeek.first.playoff_games.length == 0
+        if Game.all.select{|game| game.completed == false}.length == 0 && PlayoffWeek.first.playoff_games.length == 0
             roundOneGamesArray = []
             topSixteen = Team.all.sort {|a, b| [b.wins, b.points_for, a.points_against] <=> [a.wins, a.points_for, b.points_against]}[0, 16]            
             gameOne = PlayoffGame.create(playoff_week_id: PlayoffWeek.all[0].id, home_id: topSixteen[0].id, away_id: topSixteen[15].id, home_score: 0, away_score: 0, completed: false)

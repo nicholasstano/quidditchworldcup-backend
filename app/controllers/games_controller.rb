@@ -103,6 +103,10 @@ class GamesController < ApplicationController
             updatedHomeTeamLosses = [homeTeamLosses, 1].reduce(:+)
             game.home.update(losses: updatedHomeTeamLosses)
         end
+        selected_week = game.week 
+        if selected_week.games.select {|game| game.completed == false}.length == 0 
+            selected_week.update(games_completed: true)
+        end
         render json:  {game: game.teamInfo}
     end
 
