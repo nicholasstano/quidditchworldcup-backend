@@ -11,8 +11,9 @@ class WeeksController < ApplicationController
 
     def update
         week = Week.all.find(params[:id])
-        completedWeek = week.games.select {|game| game.completed == false}
-        if (completedWeek.length == 0)
+        uncomplete_games = week.games.select {|game| game.completed == false}
+        uncomplete_games.each {|game| game.complete_game}
+        if week.games.select {|game| game.completed == false}.length == 0 
             week.update(games_completed: true)
         end
         render json: week
