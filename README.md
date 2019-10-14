@@ -1,4 +1,4 @@
-# README
+# README & DEPLOYMENT INSTRUCTIONS
 
 Created by: Nicholas Stano
 
