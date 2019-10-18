@@ -269,12 +269,14 @@ class PlayoffGamesController < ApplicationController
 
     def update
         playoff_game = PlayoffGame.find(params[:id])
-        chasers = playoff_game.player_playoff_games.select do |player_games|
-            player_games.player.position == "Chaser"
+        home_chasers = playoff_game.home.players.select {|player| player.position == "Chaser"}.map {|p| p.player_playoff_games}
+        home_chasers.each do |chaser|
+            chaser.update(quaffle_scored: [0, 10, 20, 30, 40, 50, 70, 80, 90, 110, 120].sample)
         end
-        chasers.each do |chaser|
+        away_chasers = playoff_game.away.players.select {|player| player.position == "Chaser"}.map {|p| p.player_playoff_games}
+        away_chasers.each do |chaser|
             chaser.update(quaffle_scored: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100].sample)
-        end  
+        end
         beaters = playoff_game.player_playoff_games.select do |player_games|
             player_games.player.position == "Beater"
         end

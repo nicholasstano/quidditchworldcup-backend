@@ -133,7 +133,7 @@ Player.create(name: "Dmytro Zherdev", position: "Chaser", team: ukraine)
 Player.create(name: "Lyudmyla Vann", position: "Chaser", team: ukraine)
 Player.create(name: "Oleksandr Burgos", position: "Beater", team: ukraine)
 Player.create(name: "Volodymyr Vovk", position: "Beater", team: ukraine)
-Player.create(name: "Dave Bushnell", position: "Seeker", team: ukraine)
+Player.create(name: "Andrii Pavlovych", position: "Seeker", team: ukraine)
 Player.create(name: "Iryna Zelenko", position: "Keeper", team: ukraine)
 
 indonesia = Team.create(name: "Indonesia", flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Flag_of_Indonesia.svg/250px-Flag_of_Indonesia.svg.png", division: "Asia", wins: 0, losses: 0, points_for: 0, points_against: 0)

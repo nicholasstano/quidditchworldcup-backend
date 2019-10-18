@@ -29,10 +29,13 @@ class Game < ApplicationRecord
     end
 
     def complete_game
-        chasers = self.player_games.select do |player_games| 
-            player_games.player.position == "Chaser"
+       home_chasers = self.home.players.select {|player| player.position == "Chaser"}.map {|p| p.player_games.where(game_id: self.id)}
+        home_chasers.each do |chaser|
+            chaser.update(quaffle_scored: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110].sample)
         end
-        chasers.each do |chaser|
+
+        away_chasers = self.away.players.select {|player| player.position == "Chaser"}.map {|p| p.player_games.where(game_id: self.id)}
+        away_chasers.each do |chaser|
             chaser.update(quaffle_scored: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100].sample)
         end
 
