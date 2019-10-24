@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   get '/playoff_games/roundFourGames', to: 'playoff_games#roundFourGames'
   get '/playoff_games/winner', to: 'playoff_games#winner'
   post '/playoff_games/winner', to: 'playoff_games#winner'
+  post '/login', to: 'auth#login'
+  get '/autologin', to: "auth#autologin"
 
   resources :players
   resources :games
@@ -16,5 +18,6 @@ Rails.application.routes.draw do
   resources :teams
   resources :player_games
   resources :player_playoff_games
+  resources :users
   
 end
