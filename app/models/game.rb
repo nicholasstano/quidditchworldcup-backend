@@ -4,6 +4,8 @@ class Game < ApplicationRecord
     belongs_to :week
     has_many :player_games
     has_many :players, through: :player_games
+    has_many :eliminator_picks
+    has_many :users, through: :eliminator_picks
 
     def teamInfo
         player_game = self.player_games.select {|player| player.snitch_caught == 150}

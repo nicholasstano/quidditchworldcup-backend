@@ -19,5 +19,7 @@ Rails.application.routes.draw do
   resources :player_games
   resources :player_playoff_games
   resources :users
+  resources :eliminator_leagues
+  resources :eliminator_league_users
   
 end
