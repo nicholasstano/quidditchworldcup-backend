@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   post '/playoff_games/winner', to: 'playoff_games#winner'
   post '/login', to: 'auth#login'
   get '/autologin', to: "auth#autologin"
+  get '/open_eliminator_leagues/:user_id', to: 'eliminator_leagues#open_eliminator_leagues'
 
   resources :players
   resources :games

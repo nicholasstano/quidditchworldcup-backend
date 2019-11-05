@@ -1,3 +1,3 @@
 class EliminatorLeagueSerializer < ActiveModel::Serializer
-  attributes :eliminator_league
+  attributes :id, :name, :game_host, :users
 end
