@@ -546,5 +546,5 @@ Game.create(week_id: Week.all[11].id, home_id: 24, away_id: 22, home_score: 0, a
 Game.create(week_id: Week.all[13].id, home_id: 24, away_id: 23, home_score: 0, away_score: 0, completed: false)
 
 # All Player Games
-Game.all.each {|game| game.home.players.each {|player| PlayerGame.create(player_id: player.id, game_id: game.id, quaffle_scored: 0, quaffle_saved: 0, bludger_smashed: 0, snitch_caught: 0) } }
-Game.all.each {|game| game.away.players.each {|player| PlayerGame.create(player_id: player.id, game_id: game.id, quaffle_scored: 0, quaffle_saved: 0, bludger_smashed: 0, snitch_caught: 0) } }
+Game.all.each {|game| game.home.players.each {|player| PlayerGame.create(player_id: player.id, game_id: game.id, quaffle_scored: 0, quaffle_saved: 0, bludger_smashed: 0, snitch_caught: 0, quaffle_shots: 0, quaffle_shots_against: 0) } }
+Game.all.each {|game| game.away.players.each {|player| PlayerGame.create(player_id: player.id, game_id: game.id, quaffle_scored: 0, quaffle_saved: 0, bludger_smashed: 0, snitch_caught: 0, quaffle_shots: 0, quaffle_shots_against: 0) } }
