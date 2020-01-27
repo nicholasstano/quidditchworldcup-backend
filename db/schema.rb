@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_31_200652) do
+ActiveRecord::Schema.define(version: 2020_01_27_204022) do
 
   create_table "eliminator_league_users", force: :cascade do |t|
     t.integer "eliminator_league_id"
@@ -46,6 +46,8 @@ ActiveRecord::Schema.define(version: 2019_10_31_200652) do
     t.integer "snitch_caught"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "quaffle_shots"
+    t.integer "quaffle_shots_against"
   end
 
   create_table "player_playoff_games", force: :cascade do |t|
