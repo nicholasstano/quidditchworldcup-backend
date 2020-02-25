@@ -31,78 +31,38 @@ class Game < ApplicationRecord
     end
 
     def complete_game
-        # def complete_game
-        #     home_chasers = self.home.players.select {|player| player.position == "Chaser"}.map {|p| p.player_games.where(game_id: self.id)}
-        #      home_chasers.each do |chaser|
-        #          chaser.update(quaffle_scored: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110].sample)
-        #      end
-     
-        #      away_chasers = self.away.players.select {|player| player.position == "Chaser"}.map {|p| p.player_games.where(game_id: self.id)}
-        #      away_chasers.each do |chaser|
-        #          chaser.update(quaffle_scored: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100].sample)
-        #      end
-     
-        #      beaters = self.player_games.select do |player_games|
-        #          player_games.player.position == "Beater"
-        #      end
-        #      beaters.each do |beater|
-        #          beater.update(bludger_smashed: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].sample)
-        #      end
-     
-        #      keepers = self.player_games.select do |player_games|
-        #          player_games.player.position == "Keeper"
-        #      end
-             
-        #      keepers.each do |keeper|
-        #          keeper.update(quaffle_saved: [1, 3, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].sample)
-        #      end
-     
-        #      seekers = self.player_games.select do |player_games|
-        #          player_games.player.position == "Seeker"
-        #      end
-
-               #     home_chasers = self.home.players.select {|player| player.position == "Chaser"}.map {|p| p.player_games.where(game_id: self.id)}
-        #      home_chasers.each do |chaser|
-        #          chaser.update(quaffle_scored: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110].sample)
-        #      end
         home_chasers = self.home.players.select {|player| player.position == "Chaser"}.map {|p| p.player_games.where(game_id: self.id)}
-       home_shots = 0
-       home_scores = 0
+        home_shots = 0
+        home_scores = 0
         home_chasers.each do |chaser|
-            player_shots = rand(15)
-            player_scores = rand(player_shots) * 10
-            home_shots = home_shots + player_shots
-            home_scores = home_scores + player_scores
-            chaser.update(quaffle_shots: player_shots)
-            chaser.update(quaffle_scored: player_scores)
+            home_player_shots = rand(1..15)
+            home_player_scores = rand(home_player_shots) * 10
+            home_shots = home_shots + home_player_shots
+            home_scores = home_scores + home_player_scores
+            chaser.update(quaffle_shots: home_player_shots)
+            chaser.update(quaffle_scored: home_player_scores)
         end
 
         away_chasers = self.away.players.select {|player| player.position == "Chaser"}.map {|p| p.player_games.where(game_id: self.id)}
         away_shots = 0
         away_scores = 0
         away_chasers.each do |chaser|
-            player_shots = rand(15)
-            player_scores = rand(player_shots) * 10
-            away_shots = away_shots + player_shots
-            away_scores = away_scores + player_scores
-            chaser.update(quaffle_shots: player_shots)
-            chaser.update(quaffle_scored: player_scores)
+            away_player_shots = rand(1..15)
+            away_player_scores = rand(away_player_shots) * 10
+            away_shots = away_shots + away_player_shots
+            away_scores = away_scores + away_player_scores
+            chaser.update(quaffle_shots: away_player_shots)
+            chaser.update(quaffle_scored: away_player_scores)
         end
-
-        # home_keeper = self.home.players.select {|player| player.position == "Keeper"}.map {|p| p.player_games.where(game_id: self.id)}
-        # home_keeper.update(quaffle_shots_against: away_shots)
-        # home_keeper.update(quaffle_saved: (away_shots - home_scores))
-
-        # away_keeper = self.away.players.select {|player| player.position == "Keeper"}.map {|p| p.player_games.where(game_id: self.id)}
-        # away_keeper.update(quaffle_shots_against: home_shots)
-        # away_keeper.update(quaffle_saved: (home_shots - home_scores))
-
-        keepers = self.player_games.select do |player_games|
-            player_games.player.position == "Keeper"
+        home_keeper = self.home.players.select {|player| player.position == "Keeper"}.map {|p| p.player_games.where(game_id: self.id)}
+        home_keeper.each do |keeper|
+            keeper.update(quaffle_shots_against: away_shots)
+            keeper.update(quaffle_saved: (away_shots * 10 - home_scores) / 10)
         end
-        
-        keepers.each do |keeper|
-            keeper.update(quaffle_saved: [1, 3, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].sample)
+        away_keeper = self.away.players.select {|player| player.position == "Keeper"}.map {|p| p.player_games.where(game_id: self.id)}
+        away_keeper.each do |keeper|
+            keeper.update(quaffle_shots_against: home_shots)
+            keeper.update(quaffle_saved: (home_shots * 10 - home_scores) / 10)
         end
 
         beaters = self.player_games.select do |player_games|
